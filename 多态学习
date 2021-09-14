@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+//动物类
+class animal{
+public:
+	virtual void speak(){
+		cout << "animal在说话" << endl;
+	}
+};
+//猫猫类
+class  cat:public animal{
+public:
+	void speak(){
+		cout << "cat在说话" << endl;
+	}
+
+};
+//说话函数
+void doSpake(animal & aa){
+	aa.speak();
+}
+//测试
+void text02(){
+	cat mm;
+	doSpake(mm);
+	
+}
+int main()
+{
+
+	text02();
+
+
+	system("pause");
+	return 0;
+}
