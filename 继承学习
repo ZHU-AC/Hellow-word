@@ -1,0 +1,133 @@
+#include<iostream>
+using namespace std;
+
+//seam page
+class samepage{
+public:
+	samepage(){
+		cout << "samepage的构造函数调用" << endl;
+	}
+	~samepage(){
+		cout << "samepage的析构函数调用" << endl;
+	}
+	void head(){
+		cout << "首页,公开课，登录，注册" << endl;
+	}
+	void right(){
+		cout << "cpp,java,python,...(分类列表)" << endl;
+
+	}
+	void footer(){
+		cout << "赞助商" << endl;
+	}
+	void samename(){
+		cout << "samepage的samename函数的调用" << endl;
+
+	}
+	static int m_a;
+	static  void func1()
+	{
+		cout << "samepage__func1函数的调用" << endl;
+	}
+
+};
+ int samepage::m_a = 10;
+//java
+class java : public samepage
+{
+public:
+	java(){
+		cout << "java的构造函数调用" << endl;
+	}
+	~java(){
+		cout << "java的析构函数调用" << endl;
+	}
+	void center(){
+		cout << "java公开课" << endl;
+
+	}
+	void samename(){
+		cout << "java的samename函数的调用" << endl;
+
+	}
+	static int m_a;
+	static  void func1()
+	{
+		cout << "java__func1函数的调用" << endl;
+	}
+
+};
+int java::m_a = 20;
+
+//cpp
+class cpp : public samepage
+{
+public:
+	void center(){
+		cout << "cpp公开课" << endl;
+
+	}
+};
+//python
+class python : public samepage
+{
+public:
+	void center(){
+		cout << "python公开课" << endl;
+
+	}
+};
+
+void text01()
+{
+	java a;
+	cout << "java的界面" << endl;
+	a.center();
+	a.footer();
+	a.head();
+	a.right();
+	cout << "------------------" << endl;
+	cpp b;
+	cout << "cpp的界面" << endl;
+	b.center();
+	b.footer();
+	b.head();
+	b.right();
+	cout << "------------------" << endl;
+	python c;
+	cout << "cpp的界面" << endl;
+	c.center();
+	c.footer();
+	c.head();
+	c.right();
+	cout << "------------------" << endl;
+	cout << "------------------" << endl;
+	cout << "------------------" << endl;
+	a.samename();
+	a.samepage::samename();
+	cout << "------------------" << endl;
+	cout << "------------------" << endl;
+	cout << "访问静态同名成员变量" << endl;
+	cout << a.m_a << endl;
+	cout << a.samepage::m_a << endl;
+	cout <<java:: m_a << endl;//通过类名访问
+	cout << java::samepage::m_a << endl;
+	cout << "------------------" << endl;
+	cout << "------------------" << endl;
+	a.func1();
+	a.samepage::func1();
+	java::func1();
+	java::samepage::func1();
+
+}
+
+
+
+
+
+
+int main(){
+	text01();
+	system("pause");
+	return 0;
+}
