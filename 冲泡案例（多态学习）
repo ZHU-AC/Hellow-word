@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+class step{
+public:
+
+	virtual void boil() = 0;//煮水
+	virtual void brew() = 0;//冲泡
+	virtual void fall() = 0;//倒入杯中
+	virtual void add() = 0;//加辅料
+	//制作
+	void make()
+	{
+		boil();
+		brew();
+		fall();
+		add();
+	}
+};
+//泡茶
+class tea :public step
+{
+public:
+	virtual void boil()
+	{
+		cout << "开始煮百岁山" << endl;
+	}//煮百岁山
+	virtual void brew() {
+		cout << "加入茶叶" << endl;
+	}//冲泡
+	
+	virtual void fall() //倒入杯中
+	{
+		cout << "倒入小杯中" << endl;
+	}
+	virtual void add() //加辅料
+	{
+		cout << "加入枸杞" << endl;
+	}
+};
+//泡咖啡
+class coffee :public step
+{
+public:
+	virtual void boil()
+	{
+		cout << "开始煮农夫山泉" << endl;
+	}//煮百岁山
+	virtual void brew() {
+		cout << "加入咖啡" << endl;
+	}//冲泡
+
+	virtual void fall() //倒入杯中
+	{
+		cout << "倒入大杯中" << endl;
+	}
+	virtual void add() //加辅料
+	{
+		cout << "加入糖和牛奶" << endl;
+	}
+};
+void make1(step & aa)//全局函数实现泡咖啡
+{
+	aa.make();
+}
+void text01()
+{
+	step *abc=new tea;//堆区开辟泡茶
+	abc->make();
+	delete abc;
+	coffee ss;
+	make1(ss);
+	
+
+
+}
+
+int main()
+{
+	text01();
+	
+
+
+	system("pause");
+	return 0;
+}
