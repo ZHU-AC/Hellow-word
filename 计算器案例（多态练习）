@@ -1,0 +1,84 @@
+#include<iostream>
+using namespace std;
+#include<string>
+////普通实现
+//class calculator{
+//public:
+//	 int count( string symbol)
+//	{
+//		if (symbol == "+")
+//			return a + b;
+//		else if (symbol == "-")
+//			return a - b;
+//	}
+//	int a;
+//	int b;
+//
+//};
+////测试
+//void text01()
+//{
+//	calculator as;
+//	as.a = 10;
+//	as.b = 20;
+//	cout<<as.a<<"+"<<as.b<<"="<<as.count("+")<<endl;
+//	cout << as.a << "-" << as.b << "=" << as.count("-") << endl;
+//}
+//多态实现
+class calculator{
+public:
+	virtual int count() = 0;
+	int a;
+	int b;
+
+};
+//加法类
+class  add:public calculator{
+	virtual int count()
+	{
+		return a + b;
+	}
+};
+//减法类
+class  subtraction : public calculator{
+	virtual int count()
+	{
+		return a - b;
+	}
+};
+//乘法类
+class  mul:public calculator{
+	virtual int count()
+	{
+		return a * b;
+	}
+};
+//除法类
+class  div :public calculator{
+	virtual int count()
+	{
+		return a / b;
+	}
+};
+//计算
+//测试0
+void text02()
+{//创建加法计算器
+	calculator *abc=new add;
+	abc->a = 10;
+	abc->b = 20;
+	cout << abc->a << "+" << abc->b << "=" << abc->count() << endl;
+	delete abc;
+}
+
+
+
+
+int main()
+{
+	text02();
+	
+	system("pause");
+
+	return 0;
+}
