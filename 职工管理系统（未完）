@@ -1,3 +1,17 @@
+#pragma once
+#include<iostream>
+#include<string>
+using namespace std;
+#include"worker.h"
+//�ϰ���
+class boss :public worker
+{
+public:
+	boss(int ID, string name, int did);
+	virtual void showInfo();//��ʾ������Ϣ
+	virtual string getDeptname();//��ȡ��λ����
+
+};
 #include"employee.h"
 
 void employee::showInfo()//��ʾ������Ϣ
@@ -88,11 +102,39 @@ public:
 
    workerManager:: workerManager()//����֮��������������ʵ�֣���������ʼ��
 	{
-	   this->empArry = NULL;//��ʼ��
-	   this->empnum = 0;//��ʼ��
+	   //1.����ļ������ڵĳ�ʼ��ģʽ
+	   ifstream ifs;//�����ļ�������
+	   ifs.open(FILENAME, ios::in);
+	   if (!ifs.is_open())
+	   {
+		   cout << "�ļ������ڣ�δ������" << endl;//�������
+		   this->empArry = NULL;//��ʼ��
+		   this->empnum = 0;//��ʼ����¼��Ա��
+		   this->filesEmpty = true;//�ļ�������Ϊ��
+		   ifs.close();//�ر��ļ�
+		   return;//?
+	   }
+	   //2.�ļ���������Ϊ�յĳ�ʼ��ģʽ
+	   char ch;
+	   ifs >> ch;//?
+	   if (ifs.eof())//�ļ�Ϊ�ս���if
+	   {
+		   cout << "�ļ�Ϊ��" << endl;
+		   this->empArry = NULL;//��ʼ��
+		   this->empnum = 0;//��ʼ����¼��Ա��
+		   this->filesEmpty = true;//�ļ�������Ϊ��
+		   ifs.close();//�ر��ļ�
+		   return;//?
+
+	   }
 	}
    workerManager::~workerManager()
 	{
+	   if (this->empArry != NULL)//���������ֶ��ͷ�
+	   {
+		   delete[] this->empArry;
+		   this->empArry = NULL;
+	   }
 
 	}
    void  workerManager::showMune()//չʾ�˵��ĺ���ʵ��
@@ -173,6 +215,8 @@ public:
 		   }
 		   //��ʾ���ӳɹ�
 		   cout << "�ɹ�����" << addNum << "��ְ��" << endl;
+		   this->filesEmpty = false;//���ӳɹ��ļ���Ϊ�գ��жϣ�
+		   saveFile();//����д���ļ��ĺ���
 
 	   }
 	   else
@@ -183,6 +227,18 @@ public:
 	   system("pause");
 	   system("cls");
    }
+   void workerManager::saveFile()//�����ļ��ĺ���ʵ��
+   {
+	   ofstream ofs;
+	   ofs.open(FILENAME, ios::out);//������ķ�ʽ���ļ�----д�ļ�
+	   for (int i = 0; i < this->empnum; i++)//��ÿ���˵���Ϣд���ļ�
+	   {
+		   ofs << this->empArry[i]->m_id << " "<< this->empArry[i]->m_name << " " << this->empArry[i]->m_deptID << endl;
+	   }
+	   ofs.close();
+
+   }
+
 
 
 
@@ -190,6 +246,8 @@ public:
 #pragma once//��ֹͷ�ļ��ظ�����
 #include<iostream>
 #include"worker.h"
+#include<fstream>//�ļ�������ͷ�ļ�
+#define FILENAME "empFile.txt" 
 using namespace std;
 class workerManager
 {
@@ -201,6 +259,8 @@ public:
 	int empnum;//��¼ְ������
 	worker** empArry;//ְ������ָ��
 	void addEmp();//����ְ���ĺ�������
+	void saveFile(); //�����ļ��ĺ�������
+	bool filesEmpty;//�ж��ļ��Ƿ���ڵı�־
 
 
 };
@@ -277,18 +337,3 @@ string boss::getDeptname()//��ȡ��λ����
 }
 
 
-
-#pragma once
-#include<iostream>
-#include<string>
-using namespace std;
-#include"worker.h"
-//�ϰ���
-class boss :public worker
-{
-public:
-	boss(int ID, string name, int did);
-	virtual void showInfo();//��ʾ������Ϣ
-	virtual string getDeptname();//��ȡ��λ����
-
-};
