@@ -1,35 +1,3 @@
-#pragma once
-#include<iostream>
-#include<string>
-using namespace std;
-#include"worker.h"
-//�ϰ���
-class boss :public worker
-{
-public:
-	boss(int ID, string name, int did);
-	virtual void showInfo();//��ʾ������Ϣ
-	virtual string getDeptname();//��ȡ��λ����
-
-};
-#include"employee.h"
-
-void employee::showInfo()//��ʾ������Ϣ
-{
-	cout << "ְ����� ��" << m_id << "\t" << "ְ������ ��" << m_name << "\t\t" << "ְ�����ڵ�λ��� ��" << m_deptID << "\t" << "ְ��ְ�� :" << "���վ�����Ҫ����" << endl;
-}
-string  employee::getDeptname() //��ȡ��λ����
-{
-	return string("��ְͨ��");
-}
-employee::employee(int ID, string name, int did)//���캯��
-{
-	this->m_id = ID;
-	this->m_name = name;
-	this->m_deptID = did;
-
-}
-
 #pragma once//��ֹͷ�ļ��ظ�����
 #include<iostream>
 #include<string>
@@ -127,6 +95,11 @@ public:
 		   return;//?
 
 	   }
+	   //3.�ļ����ڲ������ݴ��ڵĳ�ʼ����ʽ
+	   int num = this->get_EmpNum();
+	   cout << "�ļ�����ְ��" << num << "��" << endl;
+	   this->empnum = num;
+
 	}
    workerManager::~workerManager()
 	{
@@ -238,6 +211,22 @@ public:
 	   ofs.close();
 
    }
+   int workerManager::get_EmpNum()//�õ��ļ��е�����
+   {
+	   int num = 0;
+	   int id;
+	   string name;
+	   int did;
+	   ifstream ifs;//������������ļ�
+	   ifs.open(FILENAME, ios::in);//���ļ�
+	   while (ifs >> id&&ifs >> name&&ifs >> did)
+	   {
+		   num++;
+	   }
+	   ifs.close();
+	   return num;
+   }
+
 
 
 
@@ -261,63 +250,9 @@ public:
 	void addEmp();//����ְ���ĺ�������
 	void saveFile(); //�����ļ��ĺ�������
 	bool filesEmpty;//�ж��ļ��Ƿ���ڵı�־
-
+	int get_EmpNum();//�õ��ļ��е�����
 
 };
-#include<iostream>
-#include<string>
-#include"workermanager.h"
-#include"worker.h"
-#include"employee.h"
-#include"boss.h"
-#include"manager.h"
-using namespace std;
-void text()
-{
-
-}
-int main()
-{
-	
-	workerManager wm;//ʵ��������
-	int userChoice = 0;
-	while (true)
-	{
-		wm.showMune();//չʾ�˵�
-		cout << "������ѡ��" << endl;
-		cin >> userChoice;
-		switch (userChoice)
-		{
-		case 0:wm.exitSystem();//����0.�����˳�������ʵ���˳�ϵͳ
-			break;
-		case 1:wm.addEmp();
-			break;
-
-		case 2:
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		case 5:
-			break;
-		case 6:
-			break;
-		case 7:
-			break;
-		default:system("cls");//ѡ����������
-			break;
-		}
-	}
-	
-
-
-
-
-
-	system("pause");
-	return 0;
-}
 
 #include"boss.h"
 boss::boss(int ID, string name, int did)
@@ -337,3 +272,35 @@ string boss::getDeptname()//��ȡ��λ����
 }
 
 
+
+#pragma once
+#include<iostream>
+#include<string>
+using namespace std;
+#include"worker.h"
+//�ϰ���
+class boss :public worker
+{
+public:
+	boss(int ID, string name, int did);
+	virtual void showInfo();//��ʾ������Ϣ
+	virtual string getDeptname();//��ȡ��λ����
+
+};
+#include"employee.h"
+
+void employee::showInfo()//��ʾ������Ϣ
+{
+	cout << "ְ����� ��" << m_id << "\t" << "ְ������ ��" << m_name << "\t\t" << "ְ�����ڵ�λ��� ��" << m_deptID << "\t" << "ְ��ְ�� :" << "���վ�����Ҫ����" << endl;
+}
+string  employee::getDeptname() //��ȡ��λ����
+{
+	return string("��ְͨ��");
+}
+employee::employee(int ID, string name, int did)//���캯��
+{
+	this->m_id = ID;
+	this->m_name = name;
+	this->m_deptID = did;
+
+}
