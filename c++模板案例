@@ -1,0 +1,59 @@
+
+#include<iostream>
+using namespace std;
+
+//一个升序排序不同类型数组的模板
+template<class T>
+	void mySort(T&arr, int&a)
+	{
+		for (int i = 0; i < a; i++)
+		{
+			int min = i;
+			for (int j = i + 1; j < a; j++)
+			{
+				if (arr[min]>arr[j]){
+					min = j;
+				}
+			}
+			if (i != min)
+			{
+				int temp = arr[min];
+				arr[min] = arr[i];
+				arr[i] = temp;
+			}
+		}
+	
+	}
+	template<class T>
+	void printarr(T &arr,int&a)
+	{
+		for (int i = 0; i < a; i++)
+		{
+			cout << arr[i] << endl;
+		}
+	}
+
+
+
+
+
+void text(){
+	int intarr[] = { 9, 8, 7, 6, 5, 4, 3, 2, 1 };
+	int intsize = sizeof(intarr) / sizeof(intarr[0]);
+	mySort(intarr, intsize);
+	printarr(intarr, intsize);
+	char chararr[] = "ahsyolkj";
+	int ntsize = sizeof(chararr) / sizeof(chararr[0]);
+
+	mySort(chararr, ntsize);
+	printarr(chararr, ntsize);
+
+}
+
+int main(){
+	
+	text();
+
+	system("pause");
+	return 0;
+}
