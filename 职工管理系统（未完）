@@ -1,9 +1,32 @@
-#pragma once//��ֹͷ�ļ��ظ�����
+
 #include<iostream>
 #include<string>
-#include"worker.h"
 using namespace std;
-class employee :public worker#include"workermanager.h"//����ļ���ʵ�������ĺ���
+#include"worker.h"
+//������
+class manager :public worker 
+{
+public:
+	manager(int ID, string name, int did);
+	virtual void showInfo() ;//��ʾ������Ϣ
+	virtual string getDeptname() ;//��ȡ��λ����
+
+};
+#pragma once//��ֹͷ�ļ��ظ�����
+#include<iostream>
+using namespace std;
+//����  ÿ��Ա�����е����Ժ���Ϊ
+class worker{
+public:
+	int  m_id;//Ա�����
+	string m_name;//Ա������
+	int m_deptID;//ְ�����ڲ������Ʊ��
+	virtual void showInfo() = 0;//��ʾ������Ϣ
+	virtual string getDeptname() = 0;//��ȡ��λ����
+
+};
+
+#include"workermanager.h"//����ļ���ʵ�������ĺ���
 #include<string>
 #include"employee.h"
 #include"boss.h"
@@ -405,49 +428,78 @@ class employee :public worker#include"workermanager.h"//����ļ����
 		   int select = 0;
 		   cin >> select;
 
-		   if (select == 1){
-			   //����
-			   int maxOrmin = 0;
-			   for (int i = 0; i < this->empnum; i++){
-				   maxOrmin = i;
-				   for (int j = i + 1; j < this->empnum; j++){
-					   if (this->empArry[maxOrmin] < this->empArry[j]){
-						   maxOrmin = j;//max
-
+		   for (int i = 0; i < this->empnum; i++)
+		   {
+			   int mixOrmin = i;
+			   for (int j = i + 1; j < this->empnum; j++)
+			   {
+				   //����
+				   if (select == 1)
+				   {
+					   if (this->empArry[mixOrmin]->m_id>this->empArry[j]->m_id)
+					   {
+						   mixOrmin = j;
 					   }
 				   }
-				   if (maxOrmin != i){
-					   worker*temp = NULL;
-					   temp = this->empArry[i];
-					   this->empArry[i] = this->empArry[maxOrmin];
-					   this->empArry[maxOrmin] = temp;
-				   }
-			   }
-		   }
-		   else if (select == 2){
-			   //����
-			   int maxOrmin = 0;
-			   for (int i = 0; i < this->empnum; i++){
-				   maxOrmin = i;
-				   for (int j = i + 1; j < this->empnum; j++){
-					   if (this->empArry[maxOrmin] >this->empArry[j]){
-						   maxOrmin = j;//min
-
+				   //����
+				   if (select == 2)
+				   {
+					   if (this->empArry[mixOrmin]->m_id < this->empArry[j]->m_id)
+					   {
+						   mixOrmin = j;
 					   }
 				   }
-				   if (maxOrmin != i){
-					   worker*temp = NULL;
-					   temp = this->empArry[i];
-					   this->empArry[i] = this->empArry[maxOrmin];
-					   this->empArry[maxOrmin] = temp;
-				   }
 			   }
+			   if (mixOrmin != i)
+			   {
+				   worker*temp = NULL;
+				   temp = this->empArry[i];
+				   this->empArry[i] = this->empArry[mixOrmin];
+				   this->empArry[mixOrmin] = temp;
+			   }
+			   
 
 		   }
-		   this->show_emp();//����̨չʾ����ṹ
+		   cout << "�������" << endl;
 		   this->saveFile();
+		   this->show_emp();
+				 
 	   }
    }
+
+
+   void workerManager::Clean_Emp()//��ղ���
+   {
+	   cout << "ȷ����գ�" << endl;
+	   cout << "1.yes" << endl;
+	   cout << "2.no" << endl;
+	   int select = 0;
+	   cin >> select;
+
+	   if (select == 1)
+	   {
+		   ofstream ofs;
+		   ofs.open(FILENAME, ios::trunc);//������ļ�
+		   //����ڴ�
+		   if (this->empArry != NULL)
+		   {
+			   for (int i = 0; i < this->empnum; i++)//������ÿ��Ԫ���ͷ�
+			   {
+				   delete this->empArry[i];
+				   this->empArry[i] = NULL;
+			   }
+		   }
+		   delete[] this->empArry;//�ͷŶ�������ָ��
+		   this->empArry = NULL;
+		   this->empnum = 0;
+		   this->filesEmpty = true;
+		   cout << "������" << endl;
+	   }
+	   system("pause");
+	   system("cls");
+
+   }
+
 #pragma once//��ֹͷ�ļ��ظ�����
 #include<iostream>
 #include"worker.h"
@@ -475,6 +527,7 @@ public:
 	void Find_Emp();//����ְ��
 	bool junumber(int id);//�ж���Ų��ظ��ĺ���
 	void Sort_Emp();//����ְ���ĺ���
+	void Clean_Emp();//��ղ���
 
 
 };
@@ -515,9 +568,9 @@ int main()
 			break;
 		case 5:wm.Find_Emp();//����ְ��
 			break;
-		case 6:wm.Sort_Emp();
+		case 6:wm.Sort_Emp();//����
 			break;
-		case 7:
+		case 7:wm.Clean_Emp();
 			break;
 		default:system("cls");//ѡ����������
 			break;
@@ -617,333 +670,4 @@ void manager::showInfo()//��ʾ������Ϣ
 string manager::getDeptname()//��ȡ��λ����
 {
 	return string("����");
-}
-
-
-#include<iostream>
-#include<string>
-using namespace std;
-#include"worker.h"
-//������
-class manager :public worker 
-{
-public:
-	manager(int ID, string name, int did);
-	virtual void showInfo() ;//��ʾ������Ϣ
-	virtual string getDeptname() ;//��ȡ��λ����
-
-};
-#pragma once//��ֹͷ�ļ��ظ�����
-#include<iostream>
-using namespace std;
-//����  ÿ��Ա�����е����Ժ���Ϊ
-class worker{
-public:
-	int  m_id;//Ա�����
-	string m_name;//Ա������
-	int m_deptID;//ְ�����ڲ������Ʊ��
-	virtual void showInfo() = 0;//��ʾ������Ϣ
-	virtual string getDeptname() = 0;//��ȡ��λ����
-
-};
-
-{
-public:
-	employee(int ID,string name ,int did);//���캯��
-	virtual void showInfo() ;//��ʾ������Ϣ
-	virtual string getDeptname() ;//��ȡ��λ����
-	
-	
-
-};
-
-#pragma once
-#include "manager.h"
-
-manager::manager(int ID, string name, int did)
-{
-	this->m_id = ID;
-	this->m_name = name;
-	this->m_deptID = did;
-	
-}
-void manager::showInfo()//��ʾ������Ϣ
-{
-	cout << "ְ����� ��" << m_id << "\t" << "ְ������ ��" <<m_name << "\t\t" << "ְ�����ڵ�λ��� ��" <<m_deptID << "\t" << "ְ��ְ�� :" << "�����ϰ�����񣬸���ͨԱ����������" <<endl;
-}
-string manager::getDeptname()//��ȡ��λ����
-{
-	return string("����");
-}
-
-
-#include<iostream>
-#include<string>
-using namespace std;
-#include"worker.h"
-//������
-class manager :public worker 
-{
-public:
-	manager(int ID, string name, int did);
-	virtual void showInfo() ;//��ʾ������Ϣ
-	virtual string getDeptname() ;//��ȡ��λ����
-
-};
-#pragma once//��ֹͷ�ļ��ظ�����
-#include<iostream>
-using namespace std;
-//����  ÿ��Ա�����е����Ժ���Ϊ
-class worker{
-public:
-	int  m_id;//Ա�����
-	string m_name;//Ա������
-	int m_deptID;//ְ�����ڲ������Ʊ��
-	virtual void showInfo() = 0;//��ʾ������Ϣ
-	virtual string getDeptname() = 0;//��ȡ��λ����
-
-};
-
-#include"workermanager.h"//����ļ���ʵ�������ĺ���
-#include<string>
-#include"employee.h"
-#include"boss.h"
-#include"manager.h"
-
-
-   workerManager:: workerManager()//����֮��������������ʵ�֣���������ʼ��
-	{
-	   //1.����ļ������ڵĳ�ʼ��ģʽ
-	   ifstream ifs;//�����ļ�������
-	   ifs.open(FILENAME, ios::in);
-	   if (!ifs.is_open())
-	   {
-		   cout << "�ļ������ڣ�δ������" << endl;//�������
-		   this->empArry = NULL;//��ʼ��
-		   this->empnum = 0;//��ʼ����¼��Ա��
-		   this->filesEmpty = true;//�ļ�������Ϊ��
-		   ifs.close();//�ر��ļ�
-		   return;//?
-	   }
-	   //2.�ļ���������Ϊ�յĳ�ʼ��ģʽ
-	   char ch;
-	   ifs >> ch;//?
-	   if (ifs.eof())//�ļ�Ϊ�ս���if
-	   {
-		   cout << "�ļ�Ϊ��" << endl;
-		   this->empArry = NULL;//��ʼ��
-		   this->empnum = 0;//��ʼ����¼��Ա��
-		   this->filesEmpty = true;//�ļ�������Ϊ��
-		   ifs.close();//�ر��ļ�
-		   return;//?
-
-	   }
-	   //3.�ļ����ڲ������ݴ��ڵĳ�ʼ����ʽ
-	   int num = this->get_EmpNum();
-	   cout << "�ļ�����ְ��" << num << "��" << endl;
-	   this->empnum = num;
-
-	}
-   workerManager::~workerManager()
-	{
-	   if (this->empArry != NULL)//���������ֶ��ͷ�
-	   {
-		   delete[] this->empArry;
-		   this->empArry = NULL;
-	   }
-
-	}
-   void  workerManager::showMune()//չʾ�˵��ĺ���ʵ��
-   {
-	   cout << "************************************************" << endl;
-	   cout << "******************��ӭʹ��ְ������ϵͳ!*********" << endl;
-	   cout << "**********************0.�˳���������*************" << endl;
-	   cout << "**********************1.����ְ����Ϣ*************" << endl;
-	   cout << "**********************2.��ʾְ����Ϣ*************" << endl;
-	   cout << "**********************3.ɾ����ְְ��*************" << endl;
-	   cout << "**********************4.�޸�ְ����Ϣ*************" << endl;
-	   cout << "**********************5.����ְ����Ϣ*************" << endl;
-	   cout << "**********************6.���ձ������*************" << endl;
-	   cout << "**********************7.��������ĵ�*************" << endl;
-	   cout << "************************************************" << endl;
-	   cout << "************************************************" << endl;
-
-   }
-   void workerManager::exitSystem()
-   {
-	   cout << "��ӭ�´�ʹ��" << endl;
-	   system("pause");
-	   exit(0);
-   }
-   void workerManager::addEmp()//����ְ��������ʵ��
-   {
-	   cout << "�������������ӵ�ְ������" << endl;
-	   int addNum = 0;
-	   cin >> addNum;//�������ְ��������
-	   if (addNum > 0)
-	   {
-		   int newSize = addNum + empnum; //���㿪���¿ռ�Ĵ�С,�µ�ְ������
-		   worker** newSpace=new worker*[newSize];   //�����¿ռ�
-		   if (this->empArry != NULL)
-		   {
-			   for (int i = 0; i < empnum; i++)  //���ԭ�������ݽ�ԭ���ռ��µ����ݿ������¿ռ�
-			   {
-				   newSpace[i] = empArry[i];
-			   }
-
-		   }
-		   for (int i = 0; i < addNum; i++) //��������������
-		   {
-			   int id;
-			   int dsid;
-			   string name;
-			   cout << "�������" << i + 1 << "�����ӵ�ְ���ı��" << endl;
-			   cin >> id;
-			   
-			   cout << "�������" << i + 1 << "�����ӵ�ְ��������" << endl;
-			   cin >> name;
-			   cout << "��ѡ��ְ���ĸ�λ" << endl;
-			   cout << "1.��ְͨ��" << endl;
-			   cout << "2.����" << endl;
-			   cout << "3.�ϰ�" << endl;
-			   cin >> dsid;
-			   worker * worker = NULL;//����һ��ְ��ָ����ܲ�ͬ����
-			   switch (dsid)
-			   {
-			   case 1:worker = new employee(id, name, 1);
-				   break;
-			   case 2:worker = new manager(id, name, 2);
-				   break;
-			   case 3:worker = new boss(id, name, 3);
-				   break;
-			   default:
-				   break;
-			   }
-			   //�������ӵ�ְ�����������飬Ҳ���ǰ��µ�worker*��ɵ�worker*��һ��
-			   newSpace[empnum + i] = worker;
-			   //�ͷ�ԭ�еĿռ�??
-			   delete[] this->empArry;
-			   //�����¿ռ��ָ��?
-			   this->empArry = newSpace;
-			   //����ְ������
-			   this->empnum = newSize;
-			  
-		   }
-		   //��ʾ���ӳɹ�
-		   cout << "�ɹ�����" << addNum << "��ְ��" << endl;
-		   this->filesEmpty = false;//���ӳɹ��ļ���Ϊ�գ��жϣ�
-		   saveFile();//����д���ļ��ĺ���
-
-	   }
-	   else
-	   {
-		   cout << "������������" << endl;
-		   
-	   }
-	   system("pause");
-	   system("cls");
-   }
-   void workerManager::saveFile()//�����ļ��ĺ���ʵ��
-   {
-	   ofstream ofs;
-	   ofs.open(FILENAME, ios::out);//������ķ�ʽ���ļ�----д�ļ�
-	   for (int i = 0; i < this->empnum; i++)//��ÿ���˵���Ϣд���ļ�
-	   {
-		   ofs << this->empArry[i]->m_id << " "<< this->empArry[i]->m_name << " " << this->empArry[i]->m_deptID << endl;
-	   }
-	   ofs.close();
-
-   }
-   int workerManager::get_EmpNum()//�õ��ļ��е�����
-   {
-	   int num = 0;
-	   int id;
-	   string name;
-	   int did;
-	   ifstream ifs;//������������ļ�
-	   ifs.open(FILENAME, ios::in);//���ļ�
-	   while (ifs >> id&&ifs >> name&&ifs >> did)
-	   {
-		   num++;
-	   }
-	   ifs.close();
-	   return num;
-   }
-
-
-
-
-
-
-#pragma once//��ֹͷ�ļ��ظ�����
-#include<iostream>
-#include"worker.h"
-#include<fstream>//�ļ�������ͷ�ļ�
-#define FILENAME "empFile.txt" 
-using namespace std;
-class workerManager
-{
-public:
-	workerManager();//ͷ�ļ�������
-	~workerManager();
-	void showMune();//չʾ�˵�
-	void exitSystem();//�˳�ϵͳ
-	int empnum;//��¼ְ������
-	worker** empArry;//ְ������ָ��
-	void addEmp();//����ְ���ĺ�������
-	void saveFile(); //�����ļ��ĺ�������
-	bool filesEmpty;//�ж��ļ��Ƿ���ڵı�־
-	int get_EmpNum();//�õ��ļ��е�����
-
-};
-
-#include"boss.h"
-boss::boss(int ID, string name, int did)
-{
-	this->m_id = ID;
-	this->m_name = name;
-	this->m_deptID = did;
-}
-void boss::showInfo()//��ʾ������Ϣ
-{
-	cout << "ְ����� ��" << m_id << "\t" << "ְ������ ��" << m_name << "\t\t" << "ְ�����ڵ�λ��� ��" << m_deptID << "\t" << "ְ��ְ�� :" << "����������˾����" << endl;
-
-}
-string boss::getDeptname()//��ȡ��λ����
-{
-	return string("�ϰ�");
-}
-
-
-
-#pragma once
-#include<iostream>
-#include<string>
-using namespace std;
-#include"worker.h"
-//�ϰ���
-class boss :public worker
-{
-public:
-	boss(int ID, string name, int did);
-	virtual void showInfo();//��ʾ������Ϣ
-	virtual string getDeptname();//��ȡ��λ����
-
-};
-#include"employee.h"
-
-void employee::showInfo()//��ʾ������Ϣ
-{
-	cout << "ְ����� ��" << m_id << "\t" << "ְ������ ��" << m_name << "\t\t" << "ְ�����ڵ�λ��� ��" << m_deptID << "\t" << "ְ��ְ�� :" << "���վ�����Ҫ����" << endl;
-}
-string  employee::getDeptname() //��ȡ��λ����
-{
-	return string("��ְͨ��");
-}
-employee::employee(int ID, string name, int did)//���캯��
-{
-	this->m_id = ID;
-	this->m_name = name;
-	this->m_deptID = did;
-
 }
