@@ -1,0 +1,83 @@
+#include"seqlist.h"
+
+
+
+void  initseqlist(Seqlist* seq)
+{
+	seq->last = 0;//init
+
+}
+void intput(Seqlist* seq) 
+{
+	cout << "����������,��0����" << endl;//
+	Datatype x;
+	cin >> x;
+	
+	while (x)
+	{
+		seq->data[seq->last] = x;
+		seq->last++;
+		cin >> x;
+	}
+
+}
+void intFile(Seqlist* seq)//�ļ���������
+{
+	ofstream ofs;
+	ofs.open("text.txt", ios::out);
+	for (int i = 0; i < seq->last; i++)
+	{
+		ofs << seq->data[i] << endl;
+	}
+	ofs.close();
+
+	
+
+}
+void putseq(Seqlist* seq){
+	for (int i = 0; i < seq->last; i++)
+	{
+		cout << seq->data[i] << endl;
+	}
+	
+}
+
+void  text()
+{
+	Seqlist aa;
+	initseqlist(&aa);
+	intput(&aa);
+	intFile(&aa);
+	putseq(&aa);
+
+}
+
+int main()
+{
+	text();
+	system("pause");
+	return 0;
+}
+#pragma once
+#include<iostream>
+#include<fstream>
+using namespace std;
+#define  MAXSIE   100
+#define  Datatype  int 
+typedef struct{
+	Datatype  data[MAXSIE];
+	int last;
+
+}Seqlist;//biemi ng
+void  initseqlist(Seqlist* seqname);//��ʼ�����ݱ�
+
+void intput(Seqlist* seq);//����˳���
+void intFile(Seqlist* seq);//д���ļ�
+void putseq();//����̨���
+void addseq();//���뺯��
+
+
+
+
+
+
