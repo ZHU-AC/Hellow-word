@@ -1,0 +1,104 @@
+#include<iostream>
+using namespace  std;
+typedef  struct ListNode{
+
+	int val;
+	struct ListNode* next;
+
+}LinkList;
+
+LinkList*  InitLinkList(int n)//��ʼ������
+{
+	LinkList* head, *node, *end;
+	head = (LinkList*)malloc(sizeof(LinkList));
+	head->val = 0;
+
+	end = head;
+	for (int i = 0; i < n; i++)
+	{
+
+		node=(LinkList*)malloc(sizeof(LinkList));
+		
+		cin >> node->val;
+		end->next  =node;
+		end = node;
+	}
+	end->next = NULL;
+	return head;
+
+	
+
+}
+
+void  printL(LinkList* h)
+{
+	while (h->next != NULL)//���
+	{
+		cout <<h->next->val << "   ";
+		h = h->next;
+	}
+}
+
+
+
+
+
+
+//�޸������ڵ�ֵ
+void  ChangeLinkList(LinkList* h, int  place, int  num)
+{
+	LinkList* t = h;
+	
+	for (int i = 0; i < place; i++)
+	{
+		t = t->next;
+	}
+	t->val = num;
+	
+}
+//ɾ���ڵ�
+void DelLinkList(LinkList* h, int place1){
+
+	LinkList* t = h;
+	for (int i = 1; i < place1; i++){
+		t = t->next;
+		if (i == place1 - 1)
+		{
+			free(t->next);
+			t = t->next->next;
+		}
+	}
+	
+}
+
+
+int main()
+{
+	cout << "���뼸����" << endl;
+	int input = 0;
+	cin >> input;
+	cout << "��ʼ����" << endl;
+	LinkList* h = InitLinkList(input);//��ʼ������
+	printL(h);
+
+	////�޸ĺ�
+	//cout << "�����޸ĵ�λ��" << endl;
+	//int place = 0;
+	//cin >> place;
+	//cout << "�����޸�ֵ" << endl;
+	//int num = 0;
+	//cin >> num;
+
+	//ChangeLinkList(h, place,  num);
+	//	printL(h);
+
+		//ɾ���ڵ�
+		cout << "����ɾ����λ��" << endl;
+		int place1 = 0;
+		cin >> place1;
+		DelLinkList(h, place1);
+		printL(h);
+
+	system("pause");
+	return  0;
+}
