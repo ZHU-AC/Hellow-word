@@ -1,0 +1,309 @@
+#include<iostream>
+using namespace  std;
+#include<vector>
+#include<algorithm>
+#include<string>
+//class  Person
+//{
+//public:
+//	string  name;
+//	int  age;
+//public:
+//	Person(string name, int age){
+//		this->age = age;
+//		this->name = name;
+//	}
+//};
+//
+//void print(int val){
+//	cout << val << endl;
+//}
+//void  text01()
+//{
+
+	//Person  p1("tt", 10);
+	//Person  p2("aa",20);
+	//Person  p3("ww", 30);
+	//Person  p4("rr", 40);
+
+	//vector<Person>vv;
+
+	//vv.push_back(p1);
+	//vv.push_back(p2);
+	//vv.push_back(p3);
+	//vv.push_back(p4);
+
+	//for (vector<Person>::iterator i = vv.begin(); i != vv.end(); i++)
+	//{
+	//	cout << i->name << ":" << i->age << endl;
+	//}
+
+	/*vv.push_back(10);
+	vv.push_back(20);
+	vv.push_back(30);
+	vv.push_back(40);
+	vector<int>::iterator   pBegin = vv.begin();
+	vector<int>::iterator   pend = vv.end();*/
+
+	/*while (pBegin!=pend)
+	{
+		cout << *pBegin << endl;
+		pBegin++;
+	}*/
+
+	/*for (vector<int>::iterator i = vv.begin(); i != vv.end(); i++){
+		cout << *i << endl;
+	}*/
+
+	/*for_each(vv.begin(), vv.end(), print);*/
+
+
+//}
+//void  text02()
+//{
+//	vector<Person*>va;
+//
+//	Person  p1("tt", 10);
+//	Person  p2("aa", 20);
+//	Person  p3("ww", 30);
+//	Person  p4("rr", 40);
+//	va.push_back(&p1);
+//	va.push_back(&p2);
+//	va.push_back(&p3);
+//	va.push_back(&p4);
+//	for (vector<Person*>::iterator i = va.begin(); i != va.end(); i++)
+//	{
+//
+//		cout << (*i)->name << ":" << (*i)->age << endl;
+//	}
+//
+//}
+//void text03()
+//{
+//	vector< vector<int> >   v;
+//	vector<int> v1;
+//	vector<int> v2;
+//	vector<int> v3;
+//	vector<int> v4;
+//	for (int i = 0; i < 4; i++)
+//	{
+//		v1.push_back(1 + i);
+//		v2.push_back(1 + i);
+//		v3.push_back(1 + i);
+//		v4.push_back(1 + i);
+//	}
+//	v.push_back(v1);
+//	v.push_back(v2);
+//	v.push_back(v3);
+//	v.push_back(v4);
+//	for (vector< vector<int> > ::iterator i = v.begin(); i != v.end(); i++)
+//	{
+//		for (vector<int>::iterator j = (*i).begin(); j != (*i).end(); j++)
+//		{
+//
+//			cout << (*j) << "  ";
+//		}
+//		cout << endl;
+//	}
+//
+//
+void printvector(vector<int >&v);
+
+void text04()
+{
+
+	//string  s1;
+	//cout << "str1==" << s1 << endl;
+	//const char* str = "kgkdg";
+	//string s2(str);
+	//cout << "str2==" << s2 << endl;
+	//string s3(s2);
+	//cout << "str3==" << s3 << endl;
+	//int a = 10;
+	//string s4(a, 'a');
+	//cout << "str4==" << s4<< endl;
+	//string   s1 = "11111";
+	//cout << "s1==" << s1<< endl;
+	//string s2 = s1;
+	//cout << "s2==" << s2<< endl;
+	//string s4;
+	//s4.assign("2222");
+	//cout << "s4==" << s4 << endl;
+	//string s5;
+	//s5.assign("1111134", 5);
+	//cout << "s5==" << s5<< endl;
+	//string s6;
+	//s6.assign(s5);
+	//cout << "s6==" << s6<< endl;
+	//string s7;
+	//s7.assign(10, 'q');
+	//cout << "s7==" << s7 << endl;
+	//string s1;
+	//s1 = "111";
+	//string  s2="22";
+	//s2 += s1;
+	//cout << "s1==" << s1 << endl;
+	//cout << "s2==" << s2 << endl;
+
+	//s1.append("222");
+	//cout << "s1==" << s1 << endl;
+	//s1.append(s2);
+	//cout << "s1==" << s1 << endl;
+	//string s3;
+	//s3.append(s1, 0, 2);
+	//cout << "s3==" << s3 << endl;
+	/*string  s1;
+	s1 = "swedf";
+	for (int i = 0; i < s1.size(); i++)
+	{
+		cout << s1[i] << " ";
+	}
+	cout << endl;
+	for (int i = 0; i < s1.size(); i++)
+	{
+		cout << s1.at(i) << "  ";
+	}
+*/
+	/*string emial = "zhangsan@qq.com";
+	int pos = emial.find("@");
+	cout << pos << endl;
+	string userName = emial.substr(0, 7);
+	cout << userName << endl;
+
+
+
+*/
+	vector<int >v1;
+	for (int i = 0; i < 10000; i++)
+	{
+
+		v1.push_back(i);
+	}
+	cout << "v1������" << v1.capacity() << endl;
+	cout << "v1��С��" <<  v1.size() << endl;
+
+
+	cout << endl;
+	v1.resize(3);
+	cout << "v1������" << v1.capacity() << endl;
+	cout << "v1��С��" << v1.size() << endl;
+
+	vector<int>     (v1)   .swap(v1);
+	cout << "v1������" << v1.capacity() << endl;
+	cout << "v1��С��" << v1.size() << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//vector<int >v2;
+	//for (int i = 10; i >0; i--)
+	//{
+
+	//	v2.push_back(i);
+	//}
+
+	//printvector(v2);
+	//cout << endl;
+
+	//v1.swap(v2);
+
+	//printvector(v1);
+
+
+
+	//for (int i = 0; i < v1.size(); i++)
+	//{
+	//	cout << v1[i] << "   ";
+
+	//}
+	//printvector(v1); cout << endl;
+
+
+	//for (int i = 0; i < v1.size(); i++)
+	//{
+	//	cout << v1.at(i) << "   ";
+
+	//}
+
+	//printvector(v1); cout << endl;
+
+
+
+
+
+	//v1.pop_back();
+	//printvector(v1);	cout << endl;
+	//v1.insert(v1.begin(),2, 100);
+	//printvector(v1);	cout << endl;
+	//v1.erase(v1.begin());
+	//printvector(v1);	cout << endl;
+	//v1.erase(v1.begin(), v1.end());
+	//printvector(v1);	cout << endl;
+
+
+
+
+
+
+
+	//if (v1.empty())//��Ϊ��
+	//{
+	//	cout << "1" << endl;
+	//}
+	//else
+
+	//{
+	//	cout << "2" << endl;
+	//	cout << "v1����Ϊ�� " << v1.capacity() << endl;
+	//	cout << "v1��СΪ�� " << v1.size() << endl;
+
+	//}
+	//v1.resize(5);
+	//printvector(v1);
+
+
+
+
+
+
+
+
+
+	//vector<int>v2;
+	//v2 = v1;
+	//printvector(v2);
+	//vector<int>v2(v1.begin(), v1.end());
+	//printvector(v2);
+	//vector<int>v3(10, 100);
+	//printvector(v3);
+	//vector<int>v4(v3);
+	//cout << endl;
+	//printvector(v4);
+
+
+}
+void printvector(vector<int >&v)
+{
+	for (vector<int >::iterator i = v.begin(); i != v.end(); i++)
+	{
+		cout << *i << " ";
+	}
+}
+
+int  main()
+{
+
+	text04();
+	system("pause");
+	return 0;
+}
