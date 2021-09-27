@@ -1,104 +1,100 @@
 #include<iostream>
-using namespace  std;
-typedef  struct ListNode{
-
-	int val;
-	struct ListNode* next;
-
-}LinkList;
-
-LinkList*  InitLinkList(int n)//��ʼ������
+using namespace std;
+typedef struct LNode
 {
-	LinkList* head, *node, *end;
-	head = (LinkList*)malloc(sizeof(LinkList));
-	head->val = 0;
+	int Data;
+	struct LNode*  next;
+}LNode,*LinkList;
 
-	end = head;
-	for (int i = 0; i < n; i++)
+LinkList InitLinklist()
+{
+	struct LNode* L = (struct LNode*)new LNode*;
+	L->next = NULL;
+	struct LNode* q = L;
+	int i = 0;
+	cin >> i;
+	while (i != 999)
 	{
+		struct LNode* p = (struct LNode*)new LNode*;
+		p->Data = i;
+		p->next = q->next;
+		q->next = p;
+		q = p;
+		cin >> i;
 
-		node=(LinkList*)malloc(sizeof(LinkList));
+
+	}
+	return  L;
+}
+
+void  Printlist(LinkList & L)
+{
+	LinkList t;
+	t = L->next;
+	while (t != NULL)
+	{
+		cout << t->Data << " ";
+		t = t->next;
+
+	}
+
+
+}
+
+
+void findlist(LinkList& L, int  j)
+{
+	LinkList t;
+	t = L;
+	for (int i = 0; i < j; i++)
+	{
 		
-		cin >> node->val;
-		end->next  =node;
-		end = node;
-	}
-	end->next = NULL;
-	return head;
+		t = t->next;
 
-	
+	}
+	if (t != NULL)
+	{
+		cout << t->Data << endl;
+
+	}
+	else
+	{
+		cout << "Խ��" << endl;
+	}
 
 }
-
-void  printL(LinkList* h)
-{
-	while (h->next != NULL)//���
-	{
-		cout <<h->next->val << "   ";
-		h = h->next;
-	}
-}
-
-
-
-
-
-
-//�޸������ڵ�ֵ
-void  ChangeLinkList(LinkList* h, int  place, int  num)
-{
-	LinkList* t = h;
-	
-	for (int i = 0; i < place; i++)
-	{
+void dellist(LinkList  &L,int  i){
+	LinkList  t = L;
+	for (int j = 0; j < i-1; j++){
 		t = t->next;
 	}
-	t->val = num;
+	LinkList  q = t->next;
+	t->next = q->next;
+	free(q);
 	
 }
-//ɾ���ڵ�
-void DelLinkList(LinkList* h, int place1){
 
-	LinkList* t = h;
-	for (int i = 1; i < place1; i++){
-		t = t->next;
-		if (i == place1 - 1)
-		{
-			free(t->next);
-			t = t->next->next;
-		}
-	}
-	
-}
+
+
 
 
 int main()
 {
 	cout << "���뼸����" << endl;
-	int input = 0;
-	cin >> input;
-	cout << "��ʼ����" << endl;
-	LinkList* h = InitLinkList(input);//��ʼ������
-	printL(h);
 
-	////�޸ĺ�
-	//cout << "�����޸ĵ�λ��" << endl;
-	//int place = 0;
-	//cin >> place;
-	//cout << "�����޸�ֵ" << endl;
-	//int num = 0;
-	//cin >> num;
+	LinkList L = InitLinklist();
+	Printlist(L);
+	cout << "���ҵڼ�����" << endl;
+	int i = 0;
+	cin >> i;
+	findlist( L,   i);
+	cout << "ɾ���ڼ�����" << endl;
+	int o = 0;
+	cin >> o;
+	dellist(L, o);
+	Printlist(L);
 
-	//ChangeLinkList(h, place,  num);
-	//	printL(h);
-
-		//ɾ���ڵ�
-		cout << "����ɾ����λ��" << endl;
-		int place1 = 0;
-		cin >> place1;
-		DelLinkList(h, place1);
-		printL(h);
 
 	system("pause");
-	return  0;
+	return 0;
 }
