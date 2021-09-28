@@ -1,0 +1,201 @@
+#include<iostream>
+#include<deque>
+#include<vector>
+#include<algorithm>
+#include<string>
+#include<ctime>
+using  namespace  std;
+class Person
+{
+public:
+	Person(string name, int score)
+	{
+		this->name = name;
+		this->score = score;
+	}
+	string name;
+	int score;
+
+
+};
+void creatPerson(vector<Person>&v)
+{
+	string nameSeed = "ABCDE";
+	for (int i = 0; i < 5; i++)
+	{
+		string name = "ѡ��";
+		name = name + nameSeed[i];
+		int score = 0;
+		Person p(name, score);
+		v.push_back(p);
+	}
+}
+void scorePerson(vector<Person>&v)
+{
+
+	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		deque<int>d;
+		for (int i = 0; i < 10; i++)
+		{
+
+			int score = rand() % 41 + 60;
+			d.push_back(score);
+		}
+		//cout << it->name << "�÷�" << endl;
+		//for (deque<int>::const_iterator iu = d.begin(); iu != d.end(); iu++)
+		//{
+		//	cout << *iu << "  ";
+		//}
+		//cout << endl;
+		
+		sort(d.begin(), d.end());
+		d.pop_back();
+		d.pop_front();
+		int pscore = 0;
+		int sum = 0;
+		for (deque<int>::const_iterator iu = d.begin(); iu != d.end(); iu++)
+		{
+			sum = sum + (*iu);
+		}
+		pscore = sum / d.size();
+		(*it).score = pscore;
+
+	}
+}
+void showScore(vector<Person>&v)
+{
+	for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << it->name << "  �÷�:  " << (*it).score << endl;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main()
+{
+
+	srand((unsigned int)time(NULL));
+	vector<Person>v;
+	creatPerson(v);
+	scorePerson(v);
+	showScore(v);
+
+
+
+
+	/*for (vector<Person>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << (*it).name << "  " << (*it).score << endl;
+	}*/
+
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//#include<iostream>
+//#include<deque>
+//#include<algorithm>
+//using  namespace  std;
+//void printDeque(const deque<int>&d)
+//
+//{
+//	for (deque<int>::const_iterator it = d.begin(); it != d.end(); it++)
+//	{
+//		cout << (*it) << "  ";
+//	}
+//	cout << endl;
+//
+//}
+//
+//
+//
+//void text()
+//{
+//	deque<int>d1;
+//
+//	for (int i = 0; i < 10; i++)
+//	{
+//		d1.push_back(i);
+//	}
+//	printDeque(d1);
+//	d1.erase(d1.begin());
+//	printDeque(d1);
+//	d1.clear();
+//	printDeque(d1);
+//
+//	deque<int>d2;
+//	d2.push_back(12);
+//	d2.push_back(34);
+//	d2.push_back(42);
+//	d2.push_back(22);
+//	d2.push_back(13);
+//	sort(d2.begin(), d2.end());
+//	printDeque(d2);
+//
+//
+//
+//
+//
+//
+//	/*d1.insert(d1.begin(), 2,1000);
+//	printDeque(d1);*/
+//	/*d1.pop_front();
+//	d1.pop_back();
+//	printDeque(d1);*/
+//
+//	//d1.push_front(1222);
+//	//printDeque(d1);
+//
+//	//deque<int> d2;
+//	//d2 = d1;
+//	//printDeque(d2);
+//	//deque<int>d3;
+//	//d3.assign(d2.begin(), d2.end());
+//	//deque<int>d4;
+//	//d4.assign(10, 100);
+//	//printDeque(d4);
+//}
+//
+//
+//
+//int main()
+//{
+//	text();
+//	system("pause");
+//	return 0;
+//}
+
+
+
+
+
