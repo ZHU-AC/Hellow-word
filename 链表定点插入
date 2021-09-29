@@ -1,0 +1,25 @@
+//putinfor:插入的数
+//infor:插入数的前一个数
+void ListInsert(linklist head, int infor, int putinfor)
+
+{
+	linklist p = head->next;
+	linklist s;
+	while (p->data!=infor)
+	{
+		p = p->next;
+		if (p->next == NULL)
+		{
+			s = (linklist)malloc(sizeof(Lnode));
+			s->data = putinfor;
+			s->next = p->next;
+			p->next = s;
+			return;
+		}
+	}
+	s = (linklist)malloc(sizeof(Lnode));
+	s->data = putinfor;
+	s->next = p->next;
+	p->next = s;
+
+}
