@@ -1,100 +1,167 @@
-#include<iostream>
-using namespace std;
-typedef struct LNode
-{
-	int Data;
-	struct LNode*  next;
-}LNode,*LinkList;
-
-LinkList InitLinklist()
-{
-	struct LNode* L = (struct LNode*)new LNode*;
-	L->next = NULL;
-	struct LNode* q = L;
-	int i = 0;
-	cin >> i;
-	while (i != 999)
-	{
-		struct LNode* p = (struct LNode*)new LNode*;
-		p->Data = i;
-		p->next = q->next;
-		q->next = p;
-		q = p;
-		cin >> i;
-
-
-	}
-	return  L;
-}
-
-void  Printlist(LinkList & L)
-{
-	LinkList t;
-	t = L->next;
-	while (t != NULL)
-	{
-		cout << t->Data << " ";
-		t = t->next;
-
-	}
-
-
-}
-
-
-void findlist(LinkList& L, int  j)
-{
-	LinkList t;
-	t = L;
-	for (int i = 0; i < j; i++)
-	{
-		
-		t = t->next;
-
-	}
-	if (t != NULL)
-	{
-		cout << t->Data << endl;
-
-	}
-	else
-	{
-		cout << "Խ��" << endl;
-	}
-
-}
-void dellist(LinkList  &L,int  i){
-	LinkList  t = L;
-	for (int j = 0; j < i-1; j++){
-		t = t->next;
-	}
-	LinkList  q = t->next;
-	t->next = q->next;
-	free(q);
-	
-}
-
-
-
+#include"slnklist.h"
 
 
 int main()
 {
-	cout << "���뼸����" << endl;
+	linklist  head =creatbyqueue();
+	print(head);
 
-	LinkList L = InitLinklist();
-	Printlist(L);
-	cout << "���ҵڼ�����" << endl;
-	int i = 0;
-	cin >> i;
-	findlist( L,   i);
-	cout << "ɾ���ڼ�����" << endl;
-	int o = 0;
-	cin >> o;
-	dellist(L, o);
-	Printlist(L);
+	Insert(head,5);
+	print(head);
 
-
-	system("pause");
+	getchar();
+	getchar();
 	return 0;
+
+}
+#define _CRT_SECURE_NO_DEPRECATE
+#include <stdio.h>
+#include <stdlib.h>
+#include<string>
+typedef int datatype;
+typedef struct node{
+	datatype data;
+	struct node *next;
+}Lnode, *linklist;
+
+/******************************************/
+/*�������ƣ�creatbystack() 		          */
+/*�������ܣ�ͷ�巨������ͷ���ĵ�����    */
+/******************************************/
+
+linklist creatbystack()
+{
+	linklist  head, s;
+	datatype x;
+	head = (linklist)malloc(sizeof(Lnode));
+	head->next = NULL;
+	printf("�����������������У���0�������룩:\n");
+	scanf("%d", &x);
+	while (x != 0)
+	{
+		s = (linklist)malloc(sizeof(Lnode));
+		s->data = x;
+		s->next = head->next;
+		head->next = s;
+		scanf("%d", &x);
+	}
+	return head;
+}
+
+/*****************************************/
+/*�������ƣ�creatbyqueue() 			 */
+/*�������ܣ�β�巨������ͷ���ĵ�����   */
+/*****************************************/
+linklist creatbyqueue()
+{
+	linklist head, r, s;
+	datatype x;
+	head = r = (linklist)malloc(sizeof(Lnode));
+	head->next = NULL;
+	printf("�����������������У���0�������룩:\n");
+	scanf("%d", &x);
+	while (x != 0)
+	{
+		s = (linklist)malloc(sizeof(Lnode));
+		s->data = x;
+		r->next = s;
+		r = s;
+		scanf("%d", &x);
+	}
+	r->next = NULL;
+	return head;
+}
+
+/************************************/
+/*�������ƣ�print()		 		*/
+/*�������ܣ������ͷ���ĵ�����    */
+/************************************/
+void print(linklist head)
+{
+	linklist p;
+	int i = 0;
+	p = head->next;
+	while (p)
+	{
+		printf("%5d", p->data);
+		i++;
+		if (i % 10 == 0)    printf("\n");
+		p = p->next;
+	}
+	printf("\n\n");
+}
+
+/***********************************/
+/*�������ƣ�delList()		 	   */
+/*�������ܣ��ͷŴ�ͷ���ĵ�����   */
+/***********************************/
+void delList(linklist head)
+{
+	linklist p = head->next;
+	while (p)
+	{
+		head->next = p->next;
+		free(p);
+		p = head->next;
+	}
+	free(head);
+}
+
+void  ListInsert(linklist head, int infor, int putinfor)
+{
+	linklist p = head->next;
+	linklist  s;
+	while (p->data != infor)
+	{
+		p = p->next;
+		if (p->next == NULL)
+		{
+			s = (linklist)malloc(sizeof(Lnode));
+			s->data = putinfor;
+			s->next = p->next;
+			p->next = s;
+			return;
+		}
+	}
+	s = (linklist)malloc(sizeof(Lnode));
+	s->next = p->next;
+	p->next = s;
+}
+void delx(linklist head, datatype x)
+{
+	linklist p = head;
+	while (p->next->data != x)
+	{
+		p = p->next;
+	}
+	linklist q= p->next;
+	p->next = p->next->next;
+	free(q);
+
+}
+void Insert(linklist &head, datatype  x)
+{
+	linklist s = (linklist)malloc(sizeof(Lnode));
+	s->data = x;
+	linklist  p = head;
+	if (p->next->data > x)
+	{
+		s->next = p->next;
+		p->next = s;
+		return;
+	}
+	linklist q = p->next;
+	while (q->next != NULL)
+	{
+		p = p->next;
+		q = q->next;
+		if (q->data > x)
+		{
+			s->next = q;
+			p->next = s;
+			return;
+		}
+	}
+	s->next = q->next;
+	q->next = s;
 }
