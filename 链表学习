@@ -165,3 +165,82 @@ void Insert(linklist &head, datatype  x)
 	s->next = q->next;
 	q->next = s;
 }
+linklist interSection(linklist &h1,linklist&h2)
+{
+	int a = 0;//搜索h1
+
+	
+	if (sizeof(h1) > sizeof(h2))
+	{
+		linklist p1 = h1->next;
+		linklist p2 = h2->next;
+		linklist h3 = (linklist)malloc(sizeof(Lnode));
+		h3->next = NULL;
+
+
+		while (p1!= NULL)
+		{
+			
+			p1 = p1->next;
+			a = p1->data;
+
+			p2 = h2->next;
+			while (p2 != NULL)
+			{
+				
+				if (p2->data== a)
+				{
+					linklist s = (linklist)malloc(sizeof(Lnode));
+					s->data = a;
+					s->next = h3->next;
+					h3->next = s;
+					
+					break;
+				}
+				p2 = p2->next;
+			}
+
+
+		}
+
+		return h3;
+	}
+	else
+	{
+		linklist p2 = h1->next;
+		linklist p1 = h2->next;
+		linklist h3 = (linklist)malloc(sizeof(Lnode));
+		h3->next = NULL;
+
+
+		while (p1->next != NULL)
+		{
+			p1 = p1->next;
+			a = p1->data;
+
+			p2 = h2->next;
+			while (p2->next != NULL)
+			{
+
+				if (p2->data = a)
+				{
+					linklist s = (linklist)malloc(sizeof(Lnode));
+					s->data = a;
+					s->next = h3->next;
+					h3->next = s;
+
+					break;
+				}
+				p2 = p2->next;
+			}
+
+
+		}
+
+		return h3;
+
+	}
+
+	
+
+
