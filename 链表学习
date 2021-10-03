@@ -165,82 +165,114 @@ void Insert(linklist &head, datatype  x)
 	s->next = q->next;
 	q->next = s;
 }
-linklist interSection(linklist &h1,linklist&h2)
+bool rePe(int a,linklist h3)
 {
+	linklist ss = h3->next;
+	while (ss != NULL)
+	{
+		if (ss->data == a)
+		{
+			return true;
+		}
+		else
+		{
+			ss = ss->next;
+		}
+	}
+	return false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+linklist interSection(linklist h1,linklist h2)
+{
+	linklist p1 = h1->next;
+	linklist p2 = h2->next;
+	linklist h3 = (linklist)malloc(sizeof(Lnode));
+	h3->next = NULL;
+
 	int a = 0;//搜索h1
+	int sum1 = 0;
+	int sum2 = 0;
+	while (p1 != NULL)
+	{
+		p1 = p1->next;
+		sum1 = sum1 + 1;
+	}
+	while (p2!= NULL)
+	{
+		p2 = p2->next;
+		sum2 = sum2 + 1;
+	}
+
+	 p1 = h1->next;
+	 p2 = h2->next;
 
 	
-	if (sizeof(h1) > sizeof(h2))
+	if (sum1>sum2)
 	{
-		linklist p1 = h1->next;
-		linklist p2 = h2->next;
-		linklist h3 = (linklist)malloc(sizeof(Lnode));
-		h3->next = NULL;
-
-
 		while (p1!= NULL)
 		{
-			
-			p1 = p1->next;
 			a = p1->data;
 
+
+			bool ret=rePe(a, h3);
+			p1 = p1->next;
 			p2 = h2->next;
 			while (p2 != NULL)
 			{
-				
-				if (p2->data== a)
+				if ((p2->data == a )&&ret==false)
 				{
 					linklist s = (linklist)malloc(sizeof(Lnode));
 					s->data = a;
 					s->next = h3->next;
 					h3->next = s;
-					
 					break;
+
 				}
 				p2 = p2->next;
 			}
-
-
 		}
-
 		return h3;
 	}
 	else
 	{
-		linklist p2 = h1->next;
-		linklist p1 = h2->next;
-		linklist h3 = (linklist)malloc(sizeof(Lnode));
-		h3->next = NULL;
-
-
-		while (p1->next != NULL)
+		while (p2 != NULL)
 		{
-			p1 = p1->next;
-			a = p1->data;
+			a = p2->data;
 
-			p2 = h2->next;
-			while (p2->next != NULL)
+
+			bool ret = rePe(a, h3);
+			p2 = p2->next;
+			p1 = h1->next;
+			while (p1 != NULL)
 			{
-
-				if (p2->data = a)
+				if ((p1->data == a) && ret == false)
 				{
 					linklist s = (linklist)malloc(sizeof(Lnode));
 					s->data = a;
 					s->next = h3->next;
 					h3->next = s;
-
 					break;
+
 				}
-				p2 = p2->next;
+				p1 = p1->next;
 			}
-
-
 		}
-
 		return h3;
 
-	}
-
+	}	
+}
 	
 
 
