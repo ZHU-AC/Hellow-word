@@ -1,0 +1,90 @@
+#include<iostream>
+using  namespace std;
+#include<string>
+#include<set>
+class  Person
+{
+public:
+
+	int  age;
+	string name;
+	Person(int age, string name)
+	{
+		this->age = age;
+		this->name = name;
+
+	}
+};
+
+class comparePerson
+{
+public:
+	bool  operator()(const Person& p1,const Person& p2)
+	{
+		return p1.age > p2.age;
+	}
+
+};
+void text()
+{
+	/*pair<int, string>p(10, "啊啊");
+	cout << p.first << "  " << p.second;
+
+	pair<int, string>p2 = make_pair(10, "llll");
+	cout << p2.first << endl;
+	cout << p2.second;
+*/
+	/*set<int>s;
+	s.insert(10);
+	s.insert(60);
+	s.insert(70);
+	s.insert(20);
+	s.insert(30);
+	s.insert(50);
+	for (set<int>::iterator it = s.begin(); it != s.end(); it++)
+	{
+		cout << *it << "   ";
+	}
+	cout << endl;
+
+	set<int, MyCompare>s2;
+	s2.insert(34);
+	s2.insert(33);
+	s2.insert(7);
+	s2.insert(5);
+	s2.insert(8);
+	for (set<int, MyCompare>::iterator it = s2.begin(); it != s2.end(); it++)
+	{
+		cout << *it << "   ";
+	}
+	cout << endl;*/
+
+	Person p1(10, "张三");
+	Person p2(4, "上的");
+	Person p3(1, "方法");
+	Person p4(6, "重复");
+	set<Person, comparePerson>s3;
+	s3.insert(p1);
+	s3.insert(p2);
+	s3.insert(p3);
+	s3.insert(p4);
+	for (set<Person, comparePerson>::iterator it = s3.begin(); it != s3.end(); it++)
+	{
+		cout << (*it).age << "   " << (*it).name << endl;
+	}
+	cout << endl;
+
+
+
+
+
+
+}
+int main()
+{
+
+	text();
+
+	system("pause");
+	return 0;
+}
