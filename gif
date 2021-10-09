@@ -1,0 +1,360 @@
+#include<iostream>
+#include<string>
+using  namespace std;
+#include<vector>
+#include<map>
+#include<time.h>
+#define SHEME 0
+#define  ART   1
+#define  RD   2
+class Worker
+{
+public:
+	string  name;
+	int Salary;
+};
+
+void printWorker(vector<Worker>&v)
+{
+	for (vector<Worker>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << "NAME :  " << it->name << "		" << "SALARY  :  " << it->Salary << endl;
+	}
+}
+void creatWorker(vector<Worker>&v)
+{
+	for (int i = 0; i < 10; i++)
+	{
+		string nameSeed = "ABCDEFGHIJ";
+		Worker worker;
+		worker.name = "worker";
+		worker.name += nameSeed[i];
+		worker.Salary = rand() % 10000 + 10000;
+		v.push_back(worker);
+
+	}
+}
+void  setGroup(vector<Worker>&v, multimap<int, Worker>&m)
+{
+	for (vector<Worker>::iterator  it  = v.begin(); it !=v.end(); it++)
+	{
+		int  num = rand() % 3;
+		m.insert(make_pair(num, (*it)));
+	}
+}
+void  showWorker(multimap<int, Worker>&m)
+{
+	cout << "策划" << endl;
+	multimap<int,Worker>::iterator  ret  =m.find(SHEME);
+	int sum = m.count(SHEME);
+	int  index = 0;
+	for (; ret != m.end()&&index<sum;ret++,index++)
+	{
+		cout << "NAME  :  " << ret->second.name << "  " << "SALARY  :  " << ret->second.Salary << endl;
+
+	}
+
+
+	cout << "美术" << endl;
+	  ret = m.find(ART);
+	 sum = m.count(ART);
+     index = 0;
+	for (; ret != m.end() && index<sum; ret++, index++)
+	{
+		cout << "NAME  :  " << ret->second.name << "  " << "SALARY  :  " << ret->second.Salary << endl;
+
+	}
+	cout << "研发" << endl;
+	ret = m.find(RD);
+	sum = m.count(RD);
+	index = 0;
+	for (; ret != m.end() && index<sum; ret++, index++)
+	{
+		cout << "NAME  :  " << ret->second.name << "  " << "SALARY  :  " << ret->second.Salary << endl;
+
+	}
+
+}
+int main()
+{
+
+	srand((unsigned int)time(NULL));
+	vector<Worker>  vWorker;
+	creatWorker(vWorker);
+	multimap<int, Worker>  mWorker;
+	
+	setGroup(vWorker, mWorker);
+	showWorker(mWorker);
+	system("pause");
+	return  0;
+}
+
+//---------------------------------------------------------------------------------------------------------------
+//map练习
+#include<iostream>
+using  namespace std;
+#include<map>
+class MyCompare
+{
+public:
+	bool operator()           (int v1, int v2)
+	{
+		return  v1 > v2;
+	}
+};
+
+void  printMap(map<int, int, MyCompare>&mp)
+{
+
+	for (map<int, int, MyCompare>::iterator it = mp.begin(); it != mp.end(); it++)
+	{
+		cout << (*it).first << "   " << (*it).second << endl;
+
+	}
+	cout << endl;
+
+}
+  void text()
+{
+	  map<int, int, MyCompare>mp;
+	  mp.insert(pair<int, int>(1, 10));
+	  mp.insert(pair<int, int>(2,20));
+	  mp.insert(pair<int, int>(41,40));
+	  mp.insert(pair<int, int>(3, 30));
+	  printMap(mp);
+	  
+
+	  //map<int,int>::iterator       ret       =mp.find(5);
+	  //if (ret == mp.end())
+	  //{
+		 // cout << "not find" << endl;
+
+	  //}
+	  //else
+	  //{
+		 // cout << "find it" << endl;
+		 // cout << "key= " << (*ret).first << " " << "value=" << (*ret).second << endl;
+
+	  //}
+
+	  //int num=mp.count(1);
+	  //cout << "number=" << num;
+
+	  //map<int, int>m;
+	  //m.insert(make_pair(10, 20));
+	  //m.insert(map<int, int>::value_type(11, 55));
+	  //m[444] = 20;
+	  //printMap(m);
+	  //m.erase(44);
+	  //printMap(m);
+	  //m.clear();
+	  //printMap(m);
+
+
+
+
+
+	  //map<int, int>mp2;
+	  //mp2.insert(pair<int, int>(8, 80));
+	  //mp2.insert(pair<int, int>(9, 90));
+	  //mp2.insert(pair<int, int>(6, 60));
+	  //mp2.insert(pair<int, int>(7, 70));
+
+	  //cout << "later" << endl;
+	  //printMap(mp);
+	  //printMap(mp2);
+	  //cout << "new" << endl;
+	  //mp.swap(mp2);
+	  //printMap(mp);
+	  //printMap(mp2);
+
+
+
+	  //if (mp.empty())
+	  //{
+		 // cout << "empty" << endl;
+	  //}
+	  //else
+	  //{
+		 // cout << "not empty" << endl;
+		 // cout << mp.size() << endl;
+
+	  //}
+
+
+
+
+
+
+
+
+
+
+	  //map<int, int>m2(mp);
+	  //printMap(m2);
+	  //cout << endl;
+	  //map<int, int>m3;
+	  //m3 = mp;
+	  //printMap(m3);
+}
+
+
+int main()
+{
+
+	text();
+
+	system("pause");
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+//函数对象
+#include<iostream>
+using namespace  std;
+#include<string>
+#include<vector>
+#include<algorithm>
+#include<functional>
+#include<numeric>
+
+void  printvector1(int v)
+{
+	cout << v << " ";
+}
+void printvector(vector<int>&v)
+{
+	for (vector<int>::iterator it = v.begin(); it != v.end(); it++)
+	{
+		cout << *it << "  ";
+	}
+	cout << endl;
+}
+class  MyFunction
+{
+public:
+	bool operator  ()    (int  val)
+	{
+		return  val > 10;
+
+	}
+};
+
+
+void text()
+{
+
+
+	vector<int>v;
+	v.push_back(10);
+	v.push_back(14);
+	v.push_back(20);
+	v.push_back(30);
+	v.push_back(40);
+	v.push_back(70);
+
+	vector<int>v1;
+	v1.push_back(10);
+	v1.push_back(20);
+	v1.push_back(20);
+	v1.push_back(30);
+	v1.push_back(40);
+	v1.push_back(70);
+
+	vector<int>vv;
+	vv.resize(max(v.size(),v1.size()));
+	vector<int>::iterator ret=set_difference(v.begin(), v.end(), v1.begin(), v1.end(), vv.begin());
+	for_each(vv.begin(),ret, printvector1);
+
+
+	//int sum = accumulate(v1.begin(), v1.end(), 0);
+	//cout << sum << endl;
+
+	/*replace_if(v1.begin(), v1.end(), MyFunction(),10000);
+	for_each(v1.begin(), v1.end(), printvector1); 
+*/
+	/*vector<int>vv;
+	vv.resize(v1.size());
+	copy(v1.begin(), v1.end(), vv.begin());
+	for_each(vv.begin(), vv.end(), printvector1);*/
+	/*vv.resize(   v.size() + v1.size()     );
+	cout << vv.size() << endl;
+	merge(v.begin(), v.end(), v1.begin(), v1.end(), vv.begin());
+	for_each(vv.begin(),vv.end(), printvector1);
+	reverse(vv.begin(), vv.end());
+	cout << endl;
+		for_each(vv.begin(), vv.end(), printvector1);
+*/
+
+	/*random_shuffle(v.begin(), v.end());
+	for_each(v.begin(), v.end(), printvector1);*/
+
+	//sort(v.begin(), v.end());
+	//cout << endl;
+	//sort(v.begin(), v.end(), greater<int>());
+	//for_each(v.begin(), v.end(), printvector1);
+
+
+
+
+
+
+	/*vector<int>vv;
+	vv.reserve(v.size());
+	vector<int>::iterator ret =transform(v.begin(), v.end(), vv.begin(), logical_not<int>());
+	for (vector<int>::iterator it = vv.begin(); it != vv.end(); it++)
+	{
+		cout << *it << "  ";
+	}
+*/
+
+	/*plus<int>p;
+	float  ret = 0;
+	ret = p(10, 20);
+	cout <<  ret << endl;*/
+}
+//class  MyAdd
+//{
+//
+//public:
+//	void operator        ()       (string  str)
+//	{
+//		cout << str << endl;
+//		count++;
+//	}
+//
+//	int count;
+//
+//	MyAdd()
+//	{
+//		count = 0;
+//	}
+//};
+//void  doprint(MyAdd &jj, string jjj){
+//
+//	jj(jjj);
+//}
+//
+//void text()
+//{
+//	MyAdd jj;
+//	doprint(jj, "jwj");
+//
+//}
+int main()
+{
+	text();
+	system("pause");
+	return 0;
+
+
+}
